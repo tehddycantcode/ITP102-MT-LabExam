@@ -95,62 +95,61 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Fallback sample data in case the server is not available
     function getSampleProducts() {
         return [
             {
-                id: 1,
-                name: "Running Pro",
-                description: "High-performance shoes for serious runners. Featuring advanced cushioning technology and breathable mesh upper for maximum comfort during long runs.",
-                price: 129.99,
-                image: "./images/running pro.jpg", 
-                stock: "In Stock",
-                category: "Running"
+            id: 1,
+            name: "Running Pro",
+            description: "High-performance shoes for serious runners. Featuring advanced cushioning technology and breathable mesh upper for maximum comfort during long runs.",
+            price: 129.99,
+            image: "./images/running pro.jpg", 
+            stock: "In Stock",
+            category: "Running"
             },
             {
-                id: 2,
-                name: "Urban Walk",
-                description: "Stylish comfort for everyday wear. These versatile shoes combine modern design with all-day comfort, perfect for city life and casual outings.",
-                price: 89.99,
-                image: "./images/urban walk.jpg", 
-                stock: "In Stock",
-                category: "Casual"
+            id: 2,
+            name: "Urban Walk",
+            description: "Stylish comfort for everyday wear. These versatile shoes combine modern design with all-day comfort, perfect for city life and casual outings.",
+            price: 89.99,
+            image: "./images/urban walk.jpg", 
+            stock: "In Stock",
+            category: "Casual"
             },
             {
-                id: 3,
-                name: "Executive",
-                description: "Premium leather for formal occasions. Handcrafted from genuine leather with elegant detailing, these shoes make a statement in any professional setting.",
-                price: 159.99,
-                image: "./images/executive.jpg", 
-                stock: "Low Stock",
-                category: "Formal"
+            id: 3,
+            name: "Executive",
+            description: "Premium leather for formal occasions. Handcrafted from genuine leather with elegant detailing, these shoes make a statement in any professional setting.",
+            price: 159.99,
+            image: "./images/executive.jpg", 
+            stock: "Low Stock",
+            category: "Formal"
             },
             {
-                id: 4,
-                name: "Trail Master",
-                description: "Durable boots for outdoor adventures. Designed with rugged terrain in mind, featuring water-resistant materials and superior grip for hiking and trekking.",
-                price: 149.99,
-                image: "./images/trail master.jpg", 
-                stock: "In Stock",
-                category: "Boots"
+            id: 4,
+            name: "Trail Master",
+            description: "Durable boots for outdoor adventures. Designed with rugged terrain in mind, featuring water-resistant materials and superior grip for hiking and trekking.",
+            price: 149.99,
+            image: "./images/trail master.jpg", 
+            stock: "In Stock",
+            category: "Boots"
             },
             {
-                id: 5,
-                name: "Sport Pro",
-                description: "Optimized for court sports performance. Lightweight with enhanced lateral support and non-marking soles, perfect for basketball, tennis, and volleyball.",
-                price: 119.99,
-                image: "./images/sport pro.jpg", 
-                stock: "Out of Stock",
-                category: "Sports"
+            id: 5,
+            name: "Sport Pro",
+            description: "Optimized for court sports performance. Lightweight with enhanced lateral support and non-marking soles, perfect for basketball, tennis, and volleyball.",
+            price: 119.99,
+            image: "./images/sport pro.jpg", 
+            stock: "Out of Stock",
+            category: "Sports"
             },
             {
-                id: 6,
-                name: "Comfort Slip",
-                description: "Easy on-off for casual comfort. Featuring memory foam insoles and flexible outsoles, these slip-ons provide exceptional comfort for everyday wear.",
-                price: 79.99,
-                image: "./images/comfort slip.jpg", 
-                stock: "In Stock",
-                category: "Casual"
+            id: 6,
+            name: "Comfort Slip",
+            description: "Easy on-off for casual comfort. Featuring memory foam insoles and flexible outsoles, these slip-ons provide exceptional comfort for everyday wear.",
+            price: 79.99,
+            image: "./images/comfort slip.jpg", 
+            stock: "In Stock",
+            category: "Casual"
             }
         ];
     }
