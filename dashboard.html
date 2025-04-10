@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShoeStop Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard-additions.css">
+    <script src="dashboard.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="brand">
+                <i class="fas fa-shoe-prints"></i>
+                <h2>ShoeStop</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="active" data-section="dashboard-section">
+                    <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                </li>
+                <li data-section="inventory-section">
+                    <a href="#"><i class="fas fa-box"></i> Inventory</a>
+                </li>
+                <li data-section="orders-section">
+                    <a href="#"><i class="fas fa-shopping-cart"></i> Orders</a>
+                </li>
+                <li data-section="customers-section">
+                    <a href="#"><i class="fas fa-users"></i> Customers</a>
+                </li>
+                <li data-section="settings-section">
+                    <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                </li>
+                <li>
+                    <a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <h2>Admin Dashboard</h2>
+                </div>
+                <div class="header-right">
+                    <button class="theme-toggle"><i class="fas fa-moon"></i></button>
+                </div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <div class="content-section active" id="dashboard-section">
+                <!-- Stats Cards -->
+                <div class="stats-cards">
+                    <div class="stat-card total-shoes">
+                        <div class="stat-card-content">
+                            <div class="stat-card-info">
+                                <h3>Total Products</h3>
+                                <p class="counter" data-target="120">0</p>
+                            </div>
+                            <div class="stat-card-icon">
+                                <i class="fas fa-shoe-prints"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card-footer">
+                            <span><i class="fas fa-arrow-up"></i> 12% from last month</span>
+                        </div>
+                    </div>
+                    <div class="stat-card in-stock">
+                        <div class="stat-card-content">
+                            <div class="stat-card-info">
+                                <h3>In Stock</h3>
+                                <p class="counter" data-target="85">0</p>
+                            </div>
+                            <div class="stat-card-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card-footer">
+                            <span><i class="fas fa-arrow-up"></i> 5% from last month</span>
+                        </div>
+                    </div>
+                    <div class="stat-card low-stock">
+                        <div class="stat-card-content">
+                            <div class="stat-card-info">
+                                <h3>Low Stock</h3>
+                                <p class="counter" data-target="20">0</p>
+                            </div>
+                            <div class="stat-card-icon">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card-footer">
+                            <span><i class="fas fa-arrow-down"></i> 3% from last month</span>
+                        </div>
+                    </div>
+                    <div class="stat-card out-of-stock">
+                        <div class="stat-card-content">
+                            <div class="stat-card-info">
+                                <h3>Out of Stock</h3>
+                                <p class="counter" data-target="15">0</p>
+                            </div>
+                            <div class="stat-card-icon">
+                                <i class="fas fa-times-circle"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card-footer">
+                            <span><i class="fas fa-arrow-up"></i> 2% from last month</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="charts-container">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Sales Overview</h3>
+                            <div class="chart-actions">
+                                <select id="salesPeriod">
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly" selected>Monthly</option>
+                                    <option value="yearly">Yearly</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Size Distribution</h3>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="sizeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category Stats -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Category Statistics</h3>
+                    </div>
+                    <div class="chart-body">
+                        <div class="category-stats">
+                            <div class="category-item">
+                                <div class="category-info">
+                                    <span class="category-name">Running</span>
+                                    <span class="category-count">42</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress running" style="width: 35%"></div>
+                                </div>
+                            </div>
+                            <div class="category-item">
+                                <div class="category-info">
+                                    <span class="category-name">Sneakers</span>
+                                    <span class="category-count">38</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress sneakers" style="width: 32%"></div>
+                                </div>
+                            </div>
+                            <div class="category-item">
+                                <div class="category-info">
+                                    <span class="category-name">Athletic</span>
+                                    <span class="category-count">25</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress athletic" style="width: 21%"></div>
+                                </div>
+                            </div>
+                            <div class="category-item">
+                                <div class="category-info">
+                                    <span class="category-name">Boots</span>
+                                    <span class="category-count">15</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress boots" style="width: 12%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inventory Section -->
+            <div class="content-section" id="inventory-section">
+                <div class="section-header">
+                    <h2>Inventory Management</h2>
+                    <div class="section-actions">
+                        <button class="btn primary-btn" id="addProductBtn" onclick="openProductModal()"><i class="fas fa-plus"></i> Add Product</button>
+                    </div>
+                </div>
+
+                <script>
+                    function openProductModal() {
+                        document.getElementById('productModal').style.display = 'block';
+                    }
+
+                    function closeProductModal() {
+                        document.getElementById('productModal').style.display = 'none';
+                    }
+                </script>
+
+                <div class="inventory-filters">
+                    <div class="filter-group">
+                        <input type="text" id="inventorySearch" placeholder="Search products...">
+                        <button class="btn" id="inventorySearchBtn" onclick="filterInventory()"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="filter-group">
+                        <select id="inventoryCategoryFilter" onchange="filterInventory()">
+                            <option value="all">All Categories</option>
+                            <option value="Running">Running</option>
+                            <option value="Casual">Casual</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Formal">Formal</option>
+                            <option value="Sandals">Sandals</option>
+                            <option value="Boots">Boots</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <select id="inventoryStockFilter" onchange="filterInventoryByStock()">
+                            <option value="all">All Stock Status</option>
+                            <option value="In Stock">In Stock</option>
+                            <option value="Low Stock">Low Stock</option>
+                            <option value="Out of Stock">Out of Stock</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="inventory-table-container">
+                    <table class="inventory-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="inventory-pagination" id="inventoryPagination"></div>
+            </div>
+
+            <!-- Orders Section -->
+            <div class="content-section" id="orders-section">
+                <div class="section-header">
+                    <h2>Order Management</h2>
+                    <div class="section-actions">
+                        <button class="btn secondary-btn" id="exportOrdersBtn"><i class="fas fa-file-export"></i> Export</button>
+                    </div>
+                </div>
+
+                <div class="order-stats">
+                    <div class="order-stat-card">
+                        <div class="order-stat-icon pending">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="order-stat-info">
+                            <h3>Pending</h3>
+                            <p id="pendingOrdersCount">12</p>
+                        </div>
+                    </div>
+                    <div class="order-stat-card">
+                        <div class="order-stat-icon processing">
+                            <i class="fas fa-spinner"></i>
+                        </div>
+                        <div class="order-stat-info">
+                            <h3>Processing</h3>
+                            <p id="processingOrdersCount">8</p>
+                        </div>
+                    </div>
+                    <div class="order-stat-card">
+                        <div class="order-stat-icon shipped">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div class="order-stat-info">
+                            <h3>Shipped</h3>
+                            <p id="shippedOrdersCount">15</p>
+                        </div>
+                    </div>
+                    <div class="order-stat-card">
+                        <div class="order-stat-icon delivered">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="order-stat-info">
+                            <h3>Delivered</h3>
+                            <p id="deliveredOrdersCount">45</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-filters">
+                    <div class="filter-group">
+                        <input type="text" id="orderSearch" placeholder="Search order ID or customer...">
+                        <button class="btn" id="orderSearchBtn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="filter-group">
+                        <select id="orderStatusFilter" onchange="filterOrdersByStatus()">
+                            <option value="all">All Statuses</option>
+                            <option value="pending">Pending</option>
+                            <option value="processing">Processing</option>
+                            <option value="shipped">Shipped</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <input type="date" id="orderDateFilter">
+                    </div>
+                </div>
+
+                <div class="orders-table-container">
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Payment</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="orders-pagination" id="ordersPagination">
+                </div>
+            </div>
+
+            <!-- Customers Section -->
+            <div class="content-section" id="customers-section">
+                <div class="section-header">
+                    <h2>Customer Management</h2>
+                    <div class="section-actions">
+                        <button class="btn primary-btn" id="addCustomerBtn" onclick="openCustomerModal()"><i class="fas fa-user-plus"></i> Add Customer</button>
+                        <button class="btn secondary-btn" id="exportCustomersBtn" onclick="exportCustomers()"><i class="fas fa-file-export"></i> Export</button>
+                    </div>
+                </div>
+                <script>
+                    function closeCustomerModal() {
+                        document.getElementById('customerModal').style.display = 'none';
+                    }
+                </script>
+
+                <div class="customer-stats">
+                    <div class="customer-stat-card">
+                        <div class="customer-stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="customer-stat-info">
+                            <h3>Total Customers</h3>
+                            <p id="totalCustomersCount">248</p>
+                        </div>
+                    </div>
+                    <div class="customer-stat-card">
+                        <div class="customer-stat-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="customer-stat-info">
+                            <h3>New This Month</h3>
+                            <p id="newCustomersCount">32</p>
+                        </div>
+                    </div>
+                    <div class="customer-stat-card">
+                        <div class="customer-stat-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="customer-stat-info">
+                            <h3>Active Shoppers</h3>
+                            <p id="activeCustomersCount">156</p>
+                        </div>
+                    </div>
+                    <div class="customer-stat-card">
+                        <div class="customer-stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="customer-stat-info">
+                            <h3>VIP Customers</h3>
+                            <p id="vipCustomersCount">24</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="customer-filters">
+                    <div class="filter-group">
+                        <input type="text" id="customerSearch" placeholder="Search customers...">
+                        <button class="btn" id="customerSearchBtn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="filter-group">
+                        <select id="customerStatusFilter" onchange="filterCustomersByStatus()">
+                            <option value="all">All Customers</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="vip">VIP</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="customers-table-container">
+                    <table class="customers-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Orders</th>
+                                <th>Total Spent</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customersTableBody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="customers-pagination" id="customersPagination">
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="content-section" id="settings-section">
+                <div class="section-header">
+                    <h2>Settings</h2>
+                </div>
+
+                <div class="settings-container">
+                    <div class="settings-sidebar">
+                        <ul class="settings-nav">
+                            <li class="active" data-settings-tab="general">General</li>
+                            <li data-settings-tab="account">Account</li>
+                            <li data-settings-tab="store">Store</li>
+                            <li data-settings-tab="payment">Payment</li>
+                            <li data-settings-tab="shipping">Shipping</li>
+                            <li data-settings-tab="tax">Tax</li>
+                            <li data-settings-tab="email">Email</li>
+                        </ul>
+                    </div>
+
+                    <div class="settings-content">
+                        <!-- General Settings -->
+                        <div class="settings-tab active" id="general-settings">
+                            <h3>General Settings</h3>
+                            <form id="generalSettingsForm">
+                                <div class="form-group">
+                                    <label for="storeName">Store Name</label>
+                                    <input type="text" id="storeName" value="ShoeStop">
+                                </div>
+                                <div class="form-group">
+                                    <label for="storeDescription">Store Description</label>
+                                    <textarea id="storeDescription">Premium footwear for every occasion.</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="storeCurrency">Currency</label>
+                                    <select id="storeCurrency">
+                                        <option value="USD" selected>USD ($)</option>
+                                        <option value="EUR">EUR (€)</option>
+                                        <option value="GBP">GBP (£)</option>
+                                        <option value="CAD">CAD (C$)</option>
+                                        <option value="AUD">AUD (A$)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="storeLanguage">Language</label>
+                                    <select id="storeLanguage">
+                                        <option value="en" selected>English</option>
+                                        <option value="es">Spanish</option>
+                                        <option value="fr">French</option>
+                                        <option value="de">German</option>
+                                        <option value="it">Italian</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Theme</label>
+                                    <div class="theme-options">
+                                        <div class="theme-option">
+                                            <input type="radio" id="lightTheme" name="theme" value="light" checked>
+                                            <label for="lightTheme">Light</label>
+                                        </div>
+                                        <div class="theme-option">
+                                            <input type="radio" id="darkTheme" name="theme" value="dark">
+                                            <label for="darkTheme">Dark</label>
+                                        </div>
+                                        <div class="theme-option">
+                                            <input type="radio" id="autoTheme" name="theme" value="auto">
+                                            <label for="autoTheme">Auto (System)</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn primary-btn">Save Changes</button>
+                            </form>
+                        </div>
+
+                        <!-- Account Settings -->
+                        <div class="settings-tab" id="account-settings">
+                            <h3>Account Settings</h3>
+                            <div class="account-info">
+                                <div class="account-avatar">
+                                    <img src="https://i.kym-cdn.com/entries/icons/original/000/043/403/cover3.jpg" alt="Admin">
+                                    <button class="btn secondary-btn change-avatar-btn">Change Avatar</button>
+                                </div>
+                                <form id="accountSettingsForm">
+                                    <div class="form-group">
+                                        <label for="accountName">Name</label>
+                                        <input type="text" id="accountName" value="Admin User">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="accountEmail">Email</label>
+                                        <input type="email" id="accountEmail" value="admin@shoestop.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="accountUsername">Username</label>
+                                        <input type="text" id="accountUsername" value="admin">
+                                    </div>
+                                    <h4>Change Password</h4>
+                                    <div class="form-group">
+                                        <label for="currentPassword">Current Password</label>
+                                        <input type="password" id="currentPassword">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="newPassword">New Password</label>
+                                        <input type="password" id="newPassword">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="confirmPassword">Confirm New Password</label>
+                                        <input type="password" id="confirmPassword">
+                                    </div>
+                                    <button type="submit" class="btn primary-btn">Update Account</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Store Settings -->
+                        <div class="settings-tab" id="store-settings">
+                            <h3>Store Settings</h3>
+                            <form id="storeSettingsForm">
+                                <div class="form-group">
+                                    <label for="storeAddress">Store Address</label>
+                                    <textarea id="storeAddress">123 Shoe Lane, Footwear City, FC 12345</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="storePhone">Phone Number</label>
+                                    <input type="text" id="storePhone" value="(555) 123-4567">
+                                </div>
+                                <div class="form-group">
+                                    <label for="storeEmail">Contact Email</label>
+                                    <input type="email" id="storeEmail" value="contact@shoestop.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="businessHours">Business Hours</label>
+                                    <textarea id="businessHours">Monday-Friday: 9am-6pm
+Saturday: 10am-4pm
+Sunday: Closed
+                                    </textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Social Media</label>
+                                    <div class="social-media-inputs">
+                                        <div class="social-input">
+                                            <i class="fab fa-facebook"></i>
+                                            <input type="text" id="facebookUrl" placeholder="Facebook URL">
+                                        </div>
+                                        <div class="social-input">
+                                            <i class="fab fa-instagram"></i>
+                                            <input type="text" id="instagramUrl" placeholder="Instagram URL">
+                                        </div>
+                                        <div class="social-input">
+                                            <i class="fab fa-instagram"></i>
+                                            <input type="text" id="instagramUrl" placeholder="Instagram URL">
+                                        </div>
+                                        <div class="social-input">
+                                            <i class="fab fa-twitter"></i>
+                                            <input type="text" id="twitterUrl" placeholder="Twitter URL">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn primary-btn">Save Changes</button>
+                            </form>
+                        </div>
+
+                        <div class="settings-tab" id="payment-settings">
+                            <h3>Payment Settings</h3>
+                            <form id="paymentSettingsForm">
+                                <div class="form-group">
+                                    <label for="paymentGateway">Payment Gateway</label>
+                                    <select id="paymentGateway">
+                                        <option value="paypal">PayPal   </option>
+                                        <option value="stripe">Master Card</option>
+                                        <option value="square">Debit Card</option>
+                                    </select>
+                                </div>
+                                
+                            </form>
+                        </div>
+                        
+                        <div class="settings-tab" id="shipping-settings">
+                            <h3>Shipping Settings</h3>
+                            <form id="shippingSettingsForm">
+                                <div class="form-group">
+                                    <label for="shippingMethod">Shipping Method</label>
+                                    <select id="shippingMethod">
+                                        <option value="standard">Standard</option>
+                                        <option value="express">Express</option>
+                                        <option value="overnight">Overnight</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="shippingRate">Shipping Rate</label>
+                                    <input type="number" id="shippingRate" step="0.01" min="0" placeholder="Enter rate">
+                                </div>
+                                
+                            </form>
+                        </div>
+                        
+                        <div class="settings-tab" id="tax-settings">
+                            <h3>Tax Settings</h3>
+                            <form id="taxSettingsForm">
+                                <div class="form-group">
+                                    <label for="taxRate">Tax Rate (%)</label>
+                                    <input type="number" id="taxRate" step="0.01" min="0" placeholder="Enter tax rate">
+                                </div>
+                                <div class="form-group">
+                                    <label for="taxRegion">Tax Region</label>
+                                    <input type="text" id="taxRegion" placeholder="Enter region">
+                                </div>
+                                <button type="submit" class="btn primary-btn">Save Tax Settings</button>
+                            </form>
+                        </div>
+                        
+                        <div class="settings-tab" id="email-settings">
+                            <h3>Email Settings</h3>
+                            <form id="emailSettingsForm">
+                                <div class="form-group">
+                                    <label for="emailSenderName">Sender Name</label>
+                                    <input type="text" id="emailSenderName" placeholder="Enter sender name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="emailSenderAddress">Sender Email Address</label>
+                                    <input type="email" id="emailSenderAddress" placeholder="Enter sender email address">
+                                </div>
+                                <div class="form-group">
+                                    <label for="smtpServer">SMTP Server</label>
+                                    <input type="text" id="smtpServer" placeholder="Enter SMTP server">
+                                </div>
+                                <div class="form-group">
+                                    <label for="smtpPort">SMTP Port</label>
+                                    <input type="number" id="smtpPort" placeholder="Enter SMTP port">
+                                </div>
+                                <div class="form-group">
+                                    <label for="smtpUsername">SMTP Username</label>
+                                    <input type="text" id="smtpUsername" placeholder="Enter SMTP username">
+                                </div>
+                                <div class="form-group">
+                                    <label for="smtpPassword">SMTP Password</label>
+                                    <input type="password" id="smtpPassword" placeholder="Enter SMTP password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="emailEncryption">Encryption</label>
+                                    <select id="emailEncryption">
+                                        <option value="none">None</option>
+                                        <option value="ssl">SSL</option>
+                                        <option value="tls">TLS</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn primary-btn">Save Email Settings</button>
+                            </form>
+                        </div></select></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Product</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="productForm">
+                    <div class="form-group">
+                        <label for="productName">Product Name</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productDescription">Description</label>
+                        <textarea id="productDescription" required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productPrice">Price ($)</label>
+                            <input type="number" id="productPrice" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productCategory">Category</label>
+                            <select id="productCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="Running">Running</option>
+                                <option value="Casual">Casual</option>
+                                <option value="Sports">Sports</option>
+                                <option value="Formal">Formal</option>
+                                <option value="Sandals">Sandals</option>
+                                <option value="Boots">Boots</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="productStock">Stock Status</label>
+                        <select id="productStock" required>
+                            <option value="In Stock">In Stock</option>
+                            <option value="Low Stock">Low Stock</option>
+                            <option value="Out of Stock">Out of Stock</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="productImage">Product Image</label>
+                        <div class="image-upload">
+                            <input type="file" id="productImage" accept="image/*">
+                            <div class="image-preview" id="imagePreview">
+                                <span>No image selected</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn secondary-btn" id="cancelProductBtn" onclick="closeProductModal()">Cancel</button>
+                        <button type="submit" class="btn primary-btn">Save Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Modal -->
+    <div id="customerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Customer</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="customerForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="customerFirstName">First Name</label>
+                            <input type="text" id="customerFirstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customerLastName">Last Name</label>
+                            <input type="text" id="customerLastName" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerEmail">Email</label>
+                        <input type="email" id="customerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerPhone">Phone</label>
+                        <input type="tel" id="customerPhone">
+                    </div>
+                    <div class="form-group">  
+                    </div>
+                    <div class="form-group">
+                        <label for="customerAddress">Address</label>
+                        <textarea id="customerAddress"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerStatus">Status</label>
+                        <select id="customerStatus" required>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="vip">VIP</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerNotes">Notes</label>
+                        <textarea id="customerNotes"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn secondary-btn" id="cancelCustomerBtn" onclick="closeCustomerModal()">Cancel</button>
+                        <button type="submit" class="btn primary-btn" onclick="saveCustomer()">Save Customer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div id="orderDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Order Details</h2>
+                <span class="close-modal" onclick="closeOrderDetailsModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="orderDetailsContent">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function closeOrderDetailsModal() {
+            document.getElementById('orderDetailsModal').style.display = 'none';
+        }
+    </script>
+
+    <!-- Customer Details Modal -->
+    <div id="customerDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Customer Details</h2>
+                <span class="close-modal" onclick="closeCustomerDetailsModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="customerDetailsContent">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function closeCustomerDetailsModal() {
+            document.getElementById('customerDetailsModal').style.display = 'none';
+        }
+    </script>
+
+    <script src="dashboard.js"></script>
+    <script>
+        loadInventoryData();
+    </script>
+</body>
+</html>
