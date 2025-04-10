@@ -1649,3 +1649,190 @@ const customerDetailsModalHTML = `
 `;
 
 document.body.insertAdjacentHTML('beforeend', customerDetailsModalHTML);
+
+function filterInventoryByStock() {
+    const stockFilter = document.getElementById('inventoryStockFilter').value;
+
+    const filteredProducts = sampleProducts.filter(product => {
+        // Filter by stock status
+        return stockFilter === 'all' || product.stock === stockFilter;
+    });
+
+    const inventoryTableBody = document.getElementById('inventoryTableBody');
+    inventoryTableBody.innerHTML = '';
+
+    if (filteredProducts.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td colspan="7" class="no-results">No products found matching your criteria.</td>`;
+        inventoryTableBody.appendChild(row);
+        return;
+    }
+
+    filteredProducts.forEach(product => {
+        const row = document.createElement('tr');
+
+        let stockClass = '';
+        if (product.stock === "In Stock") stockClass = 'in-stock';
+        else if (product.stock === "Low Stock") stockClass = 'low-stock';
+        else stockClass = 'out-of-stock';
+
+        row.innerHTML = `
+            <td>${product.id}</td>
+            <td><img src="${product.image}" alt="${product.name}" class="product-thumbnail"></td>
+            <td>${product.name}</td>
+            <td>${product.category}</td>
+            <td>$${product.price.toFixed(2)}</td>
+            <td><span class="status-badge ${stockClass}">${product.stock}</span></td>
+            <td>
+                <div class="action-buttons">
+                    <button class="action-btn edit-btn" data-id="${product.id}" title="Edit"><i class="fas fa-edit"></i></button>
+                    <button class="action-btn delete-btn" data-id="${product.id}" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </td>
+        `;
+
+        inventoryTableBody.appendChild(row);
+    });
+
+    // Reattach event listeners for edit and delete buttons
+    document.querySelectorAll('#inventoryTableBody .edit-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const productId = parseInt(this.getAttribute('data-id'));
+            editProduct(productId);
+        });
+    });
+
+    document.querySelectorAll('#inventoryTableBody .delete-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const productId = parseInt(this.getAttribute('data-id'));
+            deleteProduct(productId);
+        });
+    });
+}
+
+function filterOrdersByStatus() {
+    const statusFilter = document.getElementById('orderStatusFilter').value;
+
+    const filteredOrders = sampleOrders.filter(order => {
+        // Filter by order status
+        return statusFilter === 'all' || order.status === statusFilter;
+    });
+
+    const ordersTableBody = document.getElementById('ordersTableBody');
+    ordersTableBody.innerHTML = '';
+
+    if (filteredOrders.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td colspan="7" class="no-results">No orders found matching your criteria.</td>`;
+        ordersTableBody.appendChild(row);
+        return;
+    }
+
+    filteredOrders.forEach(order => {
+        const row = document.createElement('tr');
+
+        let statusClass = order.status;
+
+        row.innerHTML = `
+            <td>${order.id}</td>
+            <td>${order.customer}</td>
+            <td>${formatDate(order.date)}</td>
+            <td>$${order.total.toFixed(2)}</td>
+            <td><span class="status-badge ${statusClass}">${capitalizeFirstLetter(order.status)}</span></td>
+            <td>${order.payment}</td>
+            <td>
+                <div class="action-buttons">
+                    <button class="action-btn view-btn" data-id="${order.id}" title="View"><i class="fas fa-eye"></i></button>
+                    <button class="action-btn edit-btn" data-id="${order.id}" title="Edit"><i class="fas fa-edit"></i></button>
+                    <button class="action-btn delete-btn" data-id="${order.id}" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </td>
+        `;
+
+        ordersTableBody.appendChild(row);
+    });
+
+    // Reattach event listeners for action buttons
+    document.querySelectorAll('#ordersTableBody .view-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const orderId = parseInt(this.getAttribute('data-id'));
+            viewOrderDetails(orderId);
+        });
+    });
+
+    document.querySelectorAll('#ordersTableBody .edit-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const orderId = parseInt(this.getAttribute('data-id'));
+            editOrder(orderId);
+        });
+    });
+
+    document.querySelectorAll('#ordersTableBody .delete-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const orderId = parseInt(this.getAttribute('data-id'));
+            deleteOrder(orderId);
+        });
+    });
+}
+
+function filterCustomersByStatus() {
+    const statusFilter = document.getElementById('customerStatusFilter').value;
+
+    const filteredCustomers = sampleCustomers.filter(customer => {
+        // Filter by customer status
+        return statusFilter === 'all' || customer.status === statusFilter;
+    });
+
+    const customersTableBody = document.getElementById('customersTableBody');
+    customersTableBody.innerHTML = '';
+
+    if (filteredCustomers.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td colspan="8" class="no-results">No customers found matching your criteria.</td>`;
+        customersTableBody.appendChild(row);
+        return;
+    }
+
+    filteredCustomers.forEach(customer => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${customer.id}</td>
+            <td>${customer.name}</td>
+            <td>${customer.email}</td>
+            <td>${customer.phone}</td>
+            <td>${customer.orders}</td>
+            <td>$${customer.totalSpent.toFixed(2)}</td>
+            <td><span class="status-badge ${customer.status}">${capitalizeFirstLetter(customer.status)}</span></td>
+            <td>
+                <div class="action-buttons">
+                    <button class="action-btn view-btn" data-id="${customer.id}" title="View"><i class="fas fa-eye"></i></button>
+                    <button class="action-btn edit-btn" data-id="${customer.id}" title="Edit"><i class="fas fa-edit"></i></button>
+                    <button class="action-btn delete-btn" data-id="${customer.id}" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </td>
+        `;
+        customersTableBody.appendChild(row);
+    });
+
+    // Reattach event listeners for action buttons
+    document.querySelectorAll('#customersTableBody .view-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const customerId = parseInt(this.getAttribute('data-id'));
+            viewCustomerDetails(customerId);
+        });
+    });
+
+    document.querySelectorAll('#customersTableBody .edit-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const customerId = parseInt(this.getAttribute('data-id'));
+            editCustomer(customerId);
+        });
+    });
+
+    document.querySelectorAll('#customersTableBody .delete-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const customerId = parseInt(this.getAttribute('data-id'));
+            deleteCustomer(customerId);
+        });
+    });
+}
