@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Shoe Shop</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+    
+    <div class="split-container">
+        <!-- Featured Products Section -->
+        <div class="featured-section">
+            <div class="shop-header">
+                <h1>Elite Shoe Shop</h1>
+                <p class="tagline">Premium footwear for every occasion</p>
+                
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search products...">
+                    <button id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+                
+                <div class="filter-container">
+                    <div class="filter-group">
+                        <label>Category:</label>
+                        <select id="categoryFilter">
+                            <option value="all">All Categories</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Price:</label>
+                        <select id="priceFilter">
+                            <option value="all">All Prices</option>
+                            <option value="0-50">Under $50</option>
+                            <option value="50-100">$50 - $100</option>
+                            <option value="100-150">$100 - $150</option>
+                            <option value="150+">$150+</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Stock:</label>
+                        <select id="stockFilter">
+                            <option value="all">All</option>
+                            <option value="In Stock">In Stock</option>
+                            <option value="Low Stock">Low Stock</option>
+                            <option value="Out of Stock">Out of Stock</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="featured-carousel">
+                <h2>Featured Products</h2>
+                <div class="carousel-container">
+                    <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                    <div class="carousel-track">
+                    </div>
+                    <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            
+            <h2 class="all-products-title">All Products</h2>
+            <div class="products-grid">
+            </div>
+            
+            <div class="pagination">
+            </div>
+        </div>
+        
+        <!-- Login Section -->
+        <div class="login-section">
+            <div class="login-container">
+                <div class="cart-preview">
+                    <h3><i class="fas fa-shopping-cart"></i> Your Cart <span id="cartCount" class="cart-count">0</span></h3>
+                    <div id="cartItems" class="cart-items">
+                        <div class="empty-cart-message">Your cart is empty</div>
+                    </div>
+                    <div class="cart-total">
+                        <span>Total:</span>
+                        <span id="cartTotal">$0.00</span>
+                    </div>
+                    <button id="checkoutBtn" class="checkout-btn" disabled>Checkout</button>
+                </div>
+                
+                <div class="login-form-container">
+                    <h2>Member Login</h2>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="username" required>
+                            </div>
+                            <span class="error-message" id="usernameError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="password" required>
+                                <button type="button" class="toggle-password"><i class="fas fa-eye"></i></button>
+                            </div>
+                            <span class="error-message" id="passwordError"></span>
+                        </div>
+                        <button type="submit" class="login-btn">Login</button>
+                        <div class="login-links">
+                            <a href="#">Forgot password?</a>
+                            <a href="#">Create account</a>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="categories">
+                    <h3>Shop Categories</h3>
+                    <div class="category-badges">
+                        <!-- Badges will be inserted here by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="newsletter">
+                    <h3>Subscribe to Newsletter</h3>
+                    <form id="newsletterForm">
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="newsletterEmail" placeholder="Your email address" required>
+                        </div>
+                        <button type="submit" class="newsletter-btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <!-- Product details will be added by JS -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Cart Notification -->
+    <div id="notification" class="notification">
+        <div class="notification-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="notificationMessage"></span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
