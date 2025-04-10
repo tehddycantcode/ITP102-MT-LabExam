@@ -213,7 +213,7 @@
                 <div class="inventory-filters">
                     <div class="filter-group">
                         <input type="text" id="inventorySearch" placeholder="Search products...">
-                        <button class="btn" id="inventorySearchBtn"><i class="fas fa-search"></i></button>
+                        <button class="btn" id="inventorySearchBtn" onclick="filterInventory()"><i class="fas fa-search"></i></button>
                     </div>
                     <div class="filter-group">
                         <select id="inventoryCategoryFilter" onchange="filterInventory()">
@@ -227,7 +227,7 @@
                         </select>
                     </div>
                     <div class="filter-group">
-                        <select id="inventoryStockFilter">
+                        <select id="inventoryStockFilter" onchange="filterInventoryByStock()">
                             <option value="all">All Stock Status</option>
                             <option value="In Stock">In Stock</option>
                             <option value="Low Stock">Low Stock</option>
@@ -311,7 +311,7 @@
                         <button class="btn" id="orderSearchBtn"><i class="fas fa-search"></i></button>
                     </div>
                     <div class="filter-group">
-                        <select id="orderStatusFilter">
+                        <select id="orderStatusFilter" onchange="filterOrdersByStatus()">
                             <option value="all">All Statuses</option>
                             <option value="pending">Pending</option>
                             <option value="processing">Processing</option>
@@ -407,7 +407,7 @@
                         <button class="btn" id="customerSearchBtn"><i class="fas fa-search"></i></button>
                     </div>
                     <div class="filter-group">
-                        <select id="customerStatusFilter">
+                        <select id="customerStatusFilter" onchange="filterCustomersByStatus()">
                             <option value="all">All Customers</option>
                             <option value="active">Active</option>
                             <option value="inactive">Inactive</option>
