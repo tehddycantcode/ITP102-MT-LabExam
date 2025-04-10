@@ -213,7 +213,11 @@ body {
 }
 
 .carousel-item {
-    min-width: 300px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 1rem;
     transition: var(--transition);
 }
@@ -293,6 +297,8 @@ body {
 
 .product-info {
     padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
     transition: var(--transition);
 }
 
@@ -320,7 +326,7 @@ body {
 .price {
     font-weight: bold;
     color: var(--primary-color);
-    font-size: 1.1rem;
+    font-size: 1rem;
     transition: var(--transition);
 }
 
@@ -330,6 +336,7 @@ body {
     font-size: 0.8rem;
     font-weight: 500;
     transition: var(--transition);
+    flex-direction: column;
 }
 
 .in-stock {
